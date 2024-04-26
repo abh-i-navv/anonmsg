@@ -3,6 +3,7 @@ import UserModel from "@/model/User";
 import bcrypt from "bcryptjs"
 
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
+import { responseMessageGenerator } from "@/helpers/responseMessageGenerator";
 
 export async function POST(request: Request){
     await dbConnect()
@@ -13,12 +14,15 @@ export async function POST(request: Request){
        const existingUserVerifiedByUsername = await UserModel.findOne({username, isVerified: true})
     
        if(existingUserVerifiedByUsername) {
-        return Response.json({
+
+        const res = {
             success: false,
-            message: "Username is not available"
-        },{
+            message: "Username is not available",
             status:400
-        })
+        }
+
+        return responseMessageGenerator(res)
+
        }
 
        const existingUserByEmail = await UserModel.findOne({email})
@@ -27,12 +31,14 @@ export async function POST(request: Request){
        if(existingUserByEmail){
 
         if(existingUserByEmail.isVerified){
-            return Response.json({
+            const res = {
                 success: false,
-                message: "Email is already registered"
-            },{
+                message: "Email is already registered",
                 status:400
-            })
+            }
+    
+            return responseMessageGenerator(res)
+
         } else {
             const hashedPassword = await bcrypt.hash(password,10)
             existingUserByEmail.password = hashedPassword
@@ -63,28 +69,32 @@ export async function POST(request: Request){
        const emailResponse  = await sendVerificationEmail(email,username,verifyCode)
 
        if(!emailResponse){
-        return Response.json({
+        const res = {
             success: false,
-            message: "Failed sending email"
-        },{
+            message: "Failed sending email",
             status:500
-        })
+        }
+
+        return responseMessageGenerator(res)
        }
 
-       return Response.json({
-        success: true,
-        message: "User registered successfully"
-       }, {
-        status:201
-       })
+        const res = {
+            success: true,
+            message: "User registered successfully",
+            status:201
+        }
+
+        return responseMessageGenerator(res)
 
     } catch(err){
         console.log("Error registering user")
-        return Response.json({
+        const res = {
             success: false,
-            message: "Error Regestering user"
-        },{
-            status:500
-        })
+            message: "Error Regestering user",
+            status: 500
+        }
+
+        return responseMessageGenerator(res)
+
     }
 }
