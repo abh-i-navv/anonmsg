@@ -1,7 +1,7 @@
 
 interface responseMessage{
     success: boolean;
-    message: string;
+    message: string | boolean;
     status: number;
 }
 
