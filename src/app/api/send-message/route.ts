@@ -1,7 +1,6 @@
 import { responseMessageGenerator } from "@/helpers/responseMessageGenerator";
 import { dbConnect } from "@/lib/dbConnect";
 import UserModel, { Message } from "@/model/User";
-import { messageSchema } from "@/schemas/messageSchema";
 
 export async function POST(request:Request){
     await dbConnect()
