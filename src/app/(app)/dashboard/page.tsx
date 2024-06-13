@@ -1,3 +1,5 @@
+"use client"
+
 import MessageCard from '@/components/MessageCard'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -58,8 +60,8 @@ export default function Dashboard() {
     setIsSwitchLoading(false)
 
     try{
-      const response = axios.get<ApiResponse>("/api/get-messages")
-      setMessages((await response).data.messages || [])
+      const response = await axios.get<ApiResponse>("/api/get-messages")
+      setMessages(response.data.messages || [])
 
       if(refresh){
         toast({
@@ -87,18 +89,18 @@ export default function Dashboard() {
     if(!session || !session.user){
       return
     }
-    fetchMessages(false)
+    fetchMessages(true)
     fetchAcceptMessage()
   },[session,setValue,toast, fetchAcceptMessage,fetchMessages])
 
    //handle switch change
    const handleSwitchChange = async () => {
     try{
-      const response = axios.post("/api/accept-messages", {acceptMessages: !acceptMessages})
-      setValue("acceptMessage", !acceptMessages)
+      const response = await axios.post("/api/accept-messages", {acceptMessages: !acceptMessages})
+      setValue("acceptMessages", !acceptMessages)
 
       toast({
-        title: (await response).data.message,
+        title: response.data.message,
         variant: "default"
       })
 

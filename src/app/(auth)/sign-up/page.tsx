@@ -112,7 +112,7 @@ function page() {
                     </FormControl>
                         {isCheckingUsername && <Loader2 className="animate-spin"/>}
                         <p className={`${usernameMessage === "Username is unique" ? ' text-green-500' : ' text-red-500'}`}>
-                            test {usernameMessage}
+                            {usernameMessage}
                         </p>
                     <FormMessage />
                     </FormItem>

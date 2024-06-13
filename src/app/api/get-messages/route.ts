@@ -20,31 +20,35 @@ export async function GET(request: Request){
         return responseMessageGenerator(res)
     }
 
-    const userId = new mongoose.Types.ObjectId(user._id)
-
+    const name = user.username
+    
     try{
+
+        const existingUser = await UserModel.findOne({username: name})
+
         const user = await UserModel.aggregate([
-            { $match : {id:userId}},
+            { $match : {username: name}},
             {$unwind: '$messages'},
             {$sort: {'messages.createdAt': -1}},
             {$group: {_id: '$_id', messages: {$push: '$messages'}}}
-        ])
+            ])
+            
 
-        if(!user || user.length === 0 ){
+        if(existingUser && (!user || user.length === 0) ){
             const res = {
                 success: false,
-                message: "User not found",
-                status: 404
+                message: "no messages",
+                status: 200
             }
             return responseMessageGenerator(res)
         }
-
-        const res = {
-            success: true,
-            message: user[0].messages,
-            status: 200
-        }
-        return responseMessageGenerator(res)
+        
+        return Response.json({
+            success:true,
+            messages: user[0].messages
+        },{
+            status:200
+        })
 
     } catch(err){
         console.log("an unexpected error occured: ",err)

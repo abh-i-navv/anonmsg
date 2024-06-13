@@ -20,12 +20,14 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
+import dayjs from "dayjs"
 import { Button } from "./ui/button"
-import { X } from "lucide-react"
+import { Trash, X } from "lucide-react"
 import { Message } from "@/model/User"
 import { useToast } from "./ui/use-toast"
 import axios from "axios"
 import { ApiResponse } from "@/types/ApiResponse"
+import { useRouter } from "next/navigation"
 
 type MessageCardProps = {
     message: Message,
@@ -33,9 +35,10 @@ type MessageCardProps = {
 }
 
 export default function MessageCard({message, onMessageDelete} :MessageCardProps) {
-  
-    const {toast} = useToast()
 
+    const router = useRouter()
+    const {toast} = useToast()
+  
     const handleDeleteConfirm = async () => {
         const response = await axios.delete<ApiResponse>(`/api/delete-message/${message._id}`)
         
@@ -43,17 +46,19 @@ export default function MessageCard({message, onMessageDelete} :MessageCardProps
             title: response.data.message
         })
         onMessageDelete(message._id)
+
+        location.reload(true)
     
     }
   
     return (
     <Card>
     <CardHeader>
-        <CardTitle>Card Title</CardTitle>
+        <CardTitle>{message.content}</CardTitle>
         <AlertDialog>
 
       <AlertDialogTrigger asChild>
-        <Button variant="destructive"><X className="w-5 h-5"/></Button>
+        <Button variant="destructive" className="w-[55px]"><Trash className="w-5 h-5"/></Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -70,7 +75,7 @@ export default function MessageCard({message, onMessageDelete} :MessageCardProps
       </AlertDialogContent>
     </AlertDialog>
 
-        <CardDescription>Card Description</CardDescription>
+        <CardDescription>{dayjs(message.createdAt).format('MMM D, YYYY h:mm A')}</CardDescription>
     </CardHeader>
     </Card>
   )

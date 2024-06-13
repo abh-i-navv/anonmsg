@@ -12,17 +12,16 @@ export default function Navbar() {
     const user: User = session?.user
 
   return (
-    <nav>
-        <div>
-            <a href='#'>Mystery Message</a>
+    <nav className='flex justify-center items-center w-full'>
+        <div className='flex  w-full'>
+            <a href='/' className='flex justify-center items-center w-full text-lg font-bold'>Mystery Message &nbsp;</a>
             { session?
                 (<>
-                <span>Welcome, {user.username || user.email}</span>
                 <Button onClick={() => {signOut()}}>Logout</Button>
                 </>
                 ) : (
                     <Link href={'/sign-in'}>
-                        <Button>Login</Button>
+                        <Button >Login</Button>
                     </Link>
                 )
             }

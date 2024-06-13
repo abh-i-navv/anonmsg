@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Message from User456",
+        "content": "Hey there! What's up?",
+        "received": "15 minutes ago"
+    },
+    {
+        "title": "Message from Admirer",
+        "content": "Your insights are truly inspiring!",
+        "received": "1 hour ago"
+    },
+    {
+        "title": "Message from CuriousMind",
+        "content": "Got any movie suggestions?",
+        "received": "3 days ago"
+    }
+]
