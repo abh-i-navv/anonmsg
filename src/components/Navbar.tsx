@@ -14,7 +14,7 @@ export default function Navbar() {
   return (
     <nav className='flex justify-center items-center w-full'>
         <div className='flex  w-full'>
-            <a href='/' className='flex justify-center items-center w-full text-lg font-bold'>Mystery Message &nbsp;</a>
+            <a href='/' className='flex justify-center items-center w-full text-lg font-bold'>Anonymous Message &nbsp;</a>
             { session?
                 (<>
                 <Button onClick={() => {signOut()}}>Logout</Button>
