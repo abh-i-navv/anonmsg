@@ -47,7 +47,7 @@ function page() {
         }
 
         if(result?.url){
-            router.replace(`/dashboard`)
+            router.push(`/dashboard`)
         }
 
     }

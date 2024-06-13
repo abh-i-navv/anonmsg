@@ -47,7 +47,7 @@ export default function MessageCard({message, onMessageDelete} :MessageCardProps
         })
         onMessageDelete(message._id)
 
-        location.reload(true)
+        location.reload()
     
     }
   
@@ -58,7 +58,7 @@ export default function MessageCard({message, onMessageDelete} :MessageCardProps
         <AlertDialog>
 
       <AlertDialogTrigger asChild>
-        <Button variant="destructive" className="w-[55px]"><Trash className="w-5 h-5"/></Button>
+        <Button variant="destructive" size="icon"><Trash className="w-5 h-5"/></Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

@@ -65,7 +65,7 @@ function page() {
                 title: 'Success',
                 description: response.data.message
             })
-            router.replace(`/verify/${username}`)
+            router.push(`/sign-in`)
             setIsSubmitting(false)
         } catch (error) {
             console.error('Error during sign-up:', error);
