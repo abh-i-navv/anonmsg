@@ -13,7 +13,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-gray-800">
-      <a href='/' className='flex justify-center items-center w-full text-lg font-bold text-white'>Anonymous Message &nbsp;</a>
+      <a href='/' className='flex justify-center items-center w-full text-xl p-5 font-bold text-white'>Anonymous Message &nbsp;</a>
       
         {children}
       </body>
