@@ -17,7 +17,7 @@ export default function Navbar() {
             <a href='/' className='text-xl font-bold mb-4 md:mb-0'>Anonymous Message &nbsp;</a>
             { session?
                 (<>
-                <Button onClick={() => {signOut()}}>Logout</Button>
+                <Button variant={"secondary"} onClick={() => {signOut()}}>Logout</Button>
                 </>
                 ) : (
                     <Link href={'/sign-in'}>
